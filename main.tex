@@ -48,8 +48,8 @@
 
 \author{Ewan Gilligan}
 
-\titlegraphic{\includegraphics[scale=0.15]{Images/Git-Logo-Black.png}
-} % Optional title page image, comment this line to remove it
+\titlegraphic{\includegraphics[scale=0.15]{Images/Git-Logo-Black.png}}
+
 
 
 \date{\today}
@@ -69,14 +69,68 @@
 What is Version Control?
     \begin{itemize}
         \item ``Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later'' \cite{10.5555/2695634}
+        % A very naive way of doing this is to have myfile1.txt, myfile2.txt, myfileFINAL.txt. Very cumbersome, many files, and prone to error.
     \end{itemize}
 And why is it important?
     \begin{itemize}
-        \item It is a lifeline if you mess up your codebase
+        \item Revert changes that mess up your codebase
         \item Humans are bad at managing versions
         \item Separate changes that different users make
+        \item Find out who made which changes
         \item ...
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Git}
+What it is?
+\begin{itemize}
+    \item Distributed Version Control System (More on this in a second)
+    % Previously BitKeeper was used, but they were a commercial company and free of charge use was revoked.
+    \item Developed for use with the Linux Kernel in 2005
+\end{itemize}
+Why you should use it?
+\begin{itemize}
+    \item Most commonly used Version Control System (VCS) in the world (according to the Stack Overflow Dev Survey)
+    \item Commonly used in both open source and commerical software development.
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Aside: Local, Distributed, and Centralised VCS}
+    Local
+    \begin{itemize}
+        \item Keeping track of changes to files locally only.
+    \end{itemize}
+    % Simple, no extra setup required. 
+    Centralised
+    \begin{itemize}
+        \item Single server that contains all versions files
+        \item Clients check out files from the central server
+    \end{itemize}
+    % Much easier to administrate
+    % Single point of failure, same issue for local
+    Distributed
+    \begin{itemize}
+        \item Client mirrors entire repository, which includes the history.
+    \end{itemize}
+    % Each clone of the system is essentially a backup.
+    % Git can be used entirely locally, or as distributed.
+\end{frame}
+
+\begin{frame}{Basic Git Workflow}
+    
+\end{frame}
+
+\begin{frame}{How to ``git'' help}
+There are a two main ways to get help with git.
+\begin{itemize}
+    \item To get detailed help check the \texttt{man} page
+    %either man git <verb>, git help <verb>,  git <verb> -h
+    \item For a quick overview add the \texttt{-h} option to the command, e.g. \texttt{git add -h}
+    \item Stack Overflow
+    % Almost any issue you have with git is likely to have been encountered before.
+    
+\end{itemize}
 \end{frame}
 
 \begin{frame}{References}
