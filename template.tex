@@ -1,0 +1,88 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Focus Beamer Presentation
+% LaTeX Template
+% Version 1.0 (8/8/18)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Pasquale Africa (https://github.com/elauksap/focus-beamertheme) with modifications by 
+% Vel (vel@LaTeXTemplates.com)
+%
+% Template license:
+% GNU GPL v3.0 License
+%
+% Important note:
+% The bibliography/references need to be compiled with bibtex.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\usetheme{focus} % Use the Focus theme supplied with the template
+% Add option [numbering=none] to disable the footer progress bar
+% Add option [numbering=fullbar] to show the footer progress bar as always full with a slide count
+
+% Uncomment to enable the ice-blue theme
+%\definecolor{main}{RGB}{92, 138, 168}
+%\definecolor{background}{RGB}{240, 247, 255}
+
+%------------------------------------------------
+
+\usepackage{booktabs}% Required for better table rules
+\usepackage[style=authoryear, backend=biber, hyperref,sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+%----------------------------------------------------------------------------------------
+%	 TITLE SLIDE
+%----------------------------------------------------------------------------------------
+
+\title{Introduction to Version Control \& Git}
+
+\subtitle{Teach Me X}
+
+\author{Ewan Gilligan}
+
+\titlegraphic{\includegraphics[scale=0.15]{Images/Git-Logo-Black.png}
+} % Optional title page image, comment this line to remove it
+
+
+\date{\today}
+
+%------------------------------------------------
+
+\begin{document}
+
+
+%------------------------------------------------
+
+\begin{frame}
+	\maketitle % Automatically created using the information in the commands above
+\end{frame}
+
+\begin{frame}{Motivation}
+What is Version Control?
+    \begin{itemize}
+        \item ``Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later'' \cite{10.5555/2695634}
+    \end{itemize}
+And why is it important?
+    \begin{itemize}
+        \item It is a lifeline if you mess up your codebase
+        \item Humans are bad at managing versions
+        \item Separate changes that different users make
+        \item ...
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{References}
+    \printbibliography[heading=none]
+\end{frame}
+
+
+
+\end{document}
