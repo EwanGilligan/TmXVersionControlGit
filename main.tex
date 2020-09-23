@@ -42,7 +42,7 @@
 %	 TITLE SLIDE
 %----------------------------------------------------------------------------------------
 
-\title{Introduction to Version Control \& Git}
+\title{Version Control \& Git}
 
 \subtitle{Teach Me X}
 
@@ -68,7 +68,7 @@
 \begin{frame}{Motivation}
 What is Version Control?
     \begin{itemize}
-        \item ``Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later'' \cite{10.5555/2695634}
+        \item ``Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later'' \parencite{10.5555/2695634}
         % A very naive way of doing this is to have myfile1.txt, myfile2.txt, myfileFINAL.txt. Very cumbersome, many files, and prone to error.
     \end{itemize}
 And why is it important?
@@ -205,8 +205,90 @@ This will create a \texttt{.git} directory that stores all the information about
 
 \begin{frame}{Remotes}
     So far everything we have done has only made changes to the local copy of the repository. To share our changes with others, we need a remote.
+    \begin{itemize}
+        \item Remote will be automatically added if you clone from a server, can see which remotes you have with \texttt{git remote}
+        %-v for URLS. Can see different for fetch and push, so you can specify different locations.
+        \item Origin in the default name given to the server you cloned the repo from.
+        % The name origin isn't special, it's just the default.
+        \item You can add new remotes with \texttt{git remote add <identifier> <url>}
+        \item To get changes from the remote use \text{git fetch <remote>}, usually \texttt{git fetch origin}
+        \item To add changes to the remote use \texttt{git push <remote> <branch>} (more on branches next)
+        % This will make your changes visible to others.
+        \item \texttt{git remote show <remote>} will show details of the remote.
+    \end{itemize}
 \end{frame}
 
+\begin{frame}{Branching}
+    So far we've just been working with a linear series of commits, which isn't ideal for collaborating with others. The solution is branches:
+    \begin{itemize}
+        \item The snapshots that git stores with a commit contain pointers to the previous commit(s) that directly before this commit.
+        % I say commits as if you merge multiple commits together then it'll have multiple parents.
+        \item A branch is simply a movable pointer to a commit.
+        \item Default branch name is master, but this can be renamed.
+        \item Allows you to separate out changes from the master branch, then merge these in when you are done.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Creating and switching branches}
+    \begin{itemize}
+        \item \texttt{git branch} will list all the current branches.
+        \item \texttt{git branch <branch name>} will create a new branch at the current head location.
+        % This will point to the current commit. HEAD is just where you currently are
+        \item \texttt{git checkout <branch name>} allows you to switch to another branch.
+        \item \texttt{git branch -d <branch name>} is used to delete branches.
+        % Branches are cheap to create and destroy, as they are just pointers to commits.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Merging Changes}
+It would be pretty useless if we couldn't then bring the changes we have made together.
+\begin{itemize}
+    \item That is what \texttt{git merge <branch name>} is for
+    \item Note it merges the branch you specify into the branch you are currently on.
+    % So if you want to merge changes into master, then make sure you have master checked out
+    \item Git will attempt to merge the two commit histories together into one.
+    \item Doesn't always work, so merge conflicts can occur. 
+    \item Remember to commit after you've fixed the merge conflicts.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Remote Branches}
+    The real power of branches comes into play when you have remote branches.
+    \begin{itemize}
+        \item They have names of the form <remote>/<branch name>, e.g origin/master.
+        \item Pushing a branch to the remote will automatically create the remote branch for you.
+        \item \texttt{git push <remote> <branch name>} to do this.
+        % If they have different names, you can split the names with a colon, the first being your branch name and the remote branch name
+        \item \texttt{git checkout <remote branch name>} will automatically add the remote branch as a local branch if it doesn't exist.
+        % This is really a shorthand for git checkout --track <remote>/<branch name>, which in turn is a shortcut for git checkout -b branchname remote/branchname
+        \item git will then know where to push and pull from, as this branch ``tracks'' the remote.
+        \item To get changes from a remote branch, you'll want to fetch and then merge the changes. There is also \texttt{git pull} which is shorthand for that, but this can go wrong.
+        % If in doubt, just fetch and merge yourself.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Rebase}
+    Merge isn't the only way to combine multiple branches together. There is also \texttt{git rebase <branch to rebase onto>}
+    \begin{itemize}
+        \item Takes all the changes committed one one branch, and apply these on top of a different branch.
+        \item \texttt{rebase } goes back to a common ancestor, takes the diff introduced by each commit, and then applies each change to the branch.
+        \item Which of \texttt{rebase} or \texttt{merge} to use really depends on the situation, but good advise is to never rebase anything that you have pushed to somewhere else.
+        % People may have based work on those commits, which you have no rebased
+        \item Rebase can be good for cleaning up local work before pushing.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Updated Workflow}
+    \begin{enumerate}
+        \item If you're starting on a new ``bit'' of code, make a new branch.
+        \item Modify files in the working tree
+        \item Stage changes which you want to commit (using \texttt{git add})
+        \item Commit the changes you have made (using \texttt{git commit}).
+        \item Push changes to the remote
+        \item If you're done on the ``bit'' of code, merge this into the original branch (commonly master).
+        % Often you'll want to do what is known as a merge/pull request, which may require permission for you to merge into master after the code has been reviewed and approved.
+    \end{enumerate}
+\end{frame}
 
 \begin{frame}{Misc Commands}
 Here are some commands that didn't really fit in:
@@ -217,15 +299,19 @@ Here are some commands that didn't really fit in:
     \item \texttt{git tag} to tag important points in the repository history, commonly different release or version points.
     \item Creating alias', which can allow you to rename a command
     % git config --global alias.unstage `reset HEAD --'
+    \item You can delete remote branches with \texttt{git push <remote> --delete <branch name>}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Branching}
-    
-\end{frame}
-
-\begin{frame}{Updated Workflow}
-    
+\begin{frame}{For the Lazy}
+    If you aren't a big fan of the command line, then there are various visual tools for git operations such as:
+    \begin{itemize}
+        \item git gui
+        \item GitKraken (free as part of GitHub student pack)
+        \item Github Desktop
+        \item ...
+    \end{itemize}
+    It is still important to know what goes on under the hood, as you might experience a problem these can't solve.
 \end{frame}
 
 \begin{frame}{References}
