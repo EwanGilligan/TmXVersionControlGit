@@ -91,8 +91,10 @@ What it is?
 Why you should use it?
 \begin{itemize}
     \item Most commonly used Version Control System (VCS) in the world (according to the Stack Overflow Dev Survey)
-    \item Commonly used in both open source and commerical software development.
+    \item Commonly used in both open source and commercial software development.
 \end{itemize}
+Git is centred around the idea of a repository, which contains all the history of a project.
+% Some VCS work around changes and store information as a series of change (delta based version control). Git stores it's data as a series of "snapshots" of a filesystem. The entire state of the project is captured in a snapshot (it doesn't store files that haven't changed). Stream of snapshots. This is important later with branching
     
 \end{frame}
 
@@ -117,25 +119,119 @@ Why you should use it?
     % Git can be used entirely locally, or as distributed.
 \end{frame}
 
-\begin{frame}{Basic Git Workflow}
-    
-\end{frame}
-
 \begin{frame}{How to ``git'' help}
-There are a two main ways to get help with git.
+There are a few main ways to get help with git.
 \begin{itemize}
     \item To get detailed help check the \texttt{man} page
     %either man git <verb>, git help <verb>,  git <verb> -h
     \item For a quick overview add the \texttt{-h} option to the command, e.g. \texttt{git add -h}
     \item Stack Overflow
     % Almost any issue you have with git is likely to have been encountered before.
-    
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Repository Initialisation}
+There are two main ways to create a git repository:
+\begin{itemize}
+    \item call \texttt{git init} in a local directory
+    \item \texttt{git clone} an existing remote repository..
+\end{itemize}
+This will create a \texttt{.git} directory that stores all the information about the repository. 
+% It is worth noting that no files are tracked yet. The command being called clone illustrates the distributed version control at work. You don't just get a working copy, you get a full copy of the the git repo with full history.
+\end{frame}
+
+\begin{frame}{Basic Git Workflow}
+    \begin{enumerate}
+        \item Modify files in the working tree
+        % These files are in the modified state now
+        \item Stage changes which you want to commit (using \texttt{git add})
+        % The files are now staged
+        \item Commit the changes you have made (using \texttt{git commit}).
+        % The snapshot of the current directory will be saved to the git directory
+    \end{enumerate}
+    We'll be adding more stages as we go along. 
+    \begin{itemize}
+        \item You can check what files have been modified with \texttt{git status}.
+        \item or using \texttt{git diff}, more on this later.
+        % add -s or --short to get a less verbose output.
+        \item Files aren't tracked until you \texttt{git add} them.
+        % It won't be in the staged state if the file is not tracked. Also note a file is staged exactly how it was when the file itself is staged, so if you add it and then make further changes, these won't be reflected in the commit.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Git-ting rid of unwanted files}
+    Not really unwanted, but ones you don't want to track.
+    \begin{itemize}
+        \item You don't generally want to track things such as large data files, config files, compiled binaries, etc.
+        \item Can add these to \texttt{.gitignore} file to stop tracking these.
+        \item Standard glob patterns apply to these, but there are a few extra things.
+        %Github has quite a few templates for different languages if you want to use these. You can also place additional gitignore files in subdirectories if you want to change what is tracked for subdirectories.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Committing Changes}
+    Once you have staged all your changes, it is time to commit them
+    \begin{itemize}
+        \item Using \texttt{git commit}
+        \item Add \texttt{-m "..."} to add a commit message
+        \item Excluding the message will open up an editor for you to use to add a commit message
+        \item Make sure to include a meaningful message!
+        % especially important when working with others, but a good habit to get into.
+        \item Using the \texttt{-a} option will stage all files that have changed, so you can skip the \texttt{git add} stage.
+        \item You can view the commit history using the \texttt{git log} command
+        % There are lots of options, so it is worth looking at the manual for the command.
+        % -p --patch
+        % --pretty=oneline
+        % Can specify your own with format for pretty.
+        % --graph not interesting right now, but more so once branches are introduced
+        % --since=2.days
+        % -S shows commits that changed number of occurrences of a string
+        % --grep to grep the commit messages
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{When things go wrong...}
+    You need to be able to undo things when you make a mistake
+    %very likely when starting off
+    \begin{itemize}
+        \item \texttt{git commit --amend} to redo a commit with additional changes
+        \item %Really creates a new commit in its place, replacing the old one. Helps avoid commits like fixing typo or forgot this file.
+        \item \texttt{git reset HEAD <file>} to unstage a file.
+        \item \texttt{git checkout -- <file>} to revert a file to what it was previously
+        %both shown by git status
+        %There are more commands, these are just the basics.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Remotes}
+    So far everything we have done has only made changes to the local copy of the repository. To share our changes with others, we need a remote.
+\end{frame}
+
+
+\begin{frame}{Misc Commands}
+Here are some commands that didn't really fit in:
+\begin{itemize}
+    \item \texttt{git rm} will stage a file for removal
+    \item \texttt{git mv} to move files. 
+    % Git doesn't explicitely track file movement, so it won't know while staging that you moved a file. It'll figure it out after the fact. Like the usual unix mv, you can also use this to rename a file.
+    \item \texttt{git tag} to tag important points in the repository history, commonly different release or version points.
+    \item Creating alias', which can allow you to rename a command
+    % git config --global alias.unstage `reset HEAD --'
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Branching}
+    
+\end{frame}
+
+\begin{frame}{Updated Workflow}
+    
 \end{frame}
 
 \begin{frame}{References}
     \printbibliography[heading=none]
 \end{frame}
+
 
 
 
